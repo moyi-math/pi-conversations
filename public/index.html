@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="darkreader-lock" />
+    <title>π 会话管理</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="brand"><span class="logo">π</span> 会话管理</div>
+        <div class="search-wrap">
+          <input id="search" type="search" placeholder="搜索所有会话内容…   按 / 聚焦" autocomplete="off" />
+          <button id="clearSearch" class="ghost" title="清除搜索" hidden>×</button>
+        </div>
+        <nav class="tabs">
+          <button data-tab="sessions" class="active">会话</button>
+          <button data-tab="stats">统计</button>
+        </nav>
+        <button id="syncBtn" class="ghost-btn" title="重新扫描会话文件（刷新页面也会自动做这件事）">同步</button>
+        <div class="status" id="status"></div>
+      </header>
+      <div class="body">
+        <aside id="sidebar">
+          <div class="filters">
+            <select id="projectFilter" title="按项目筛选"><option value="">全部项目</option></select>
+            <label class="check"><input type="checkbox" id="namedOnly" /> 仅命名</label>
+            <select id="sortBy" title="排序">
+              <option value="modified">最近活动</option>
+              <option value="messageCount">消息数</option>
+              <option value="cost">成本</option>
+              <option value="created">创建时间</option>
+            </select>
+          </div>
+          <div class="list" id="list"></div>
+        </aside>
+        <main id="main"></main>
+      </div>
+    </div>
+    <div id="toast" hidden></div>
+    <div id="overlay" hidden></div>
+    <script src="/app.js"></script>
+  </body>
+</html>

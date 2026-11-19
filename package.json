@@ -1,0 +1,50 @@
+{
+  "name": "@moyi-math/pi-conversations",
+  "version": "0.1.0",
+  "description": "Browse, search, rename, delete, and export every pi session from a local web UI.",
+  "type": "module",
+  "license": "MIT",
+  "author": "moyi-math",
+  "keywords": [
+    "pi-package",
+    "pi",
+    "pi-extension",
+    "sessions",
+    "web-ui",
+    "search",
+    "transcript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moyi-math/pi-conversations.git"
+  },
+  "homepage": "https://github.com/moyi-math/pi-conversations#readme",
+  "bugs": {
+    "url": "https://github.com/moyi-math/pi-conversations/issues"
+  },
+  "files": [
+    "index.ts",
+    "indexer.ts",
+    "server.ts",
+    "public/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "peerDependenciesMeta": {
+    "@earendil-works/pi-coding-agent": {
+      "optional": true
+    }
+  }
+}
