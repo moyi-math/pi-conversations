@@ -1,0 +1,55 @@
+name: publish
+
+# Publishing goes through npm Trusted Publishing (OIDC): no long-lived token
+# exists in this repo or in secrets. Configure the binding once at
+# https://www.npmjs.com/package/pi-conversations/access
+#   Publisher: GitHub Actions
+#   Repository: moyi-math/pi-conversations
+#   Workflow: publish.yml   (environment: leave empty)
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  # Required for the OIDC token npm exchanges for a short-lived publish credential.
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Use the newest npm CLI
+        # Trusted publishing needs npm >= 11.5.1; keep it current.
+        run: npm install -g npm@latest && npm --version
+
+      - name: Verify tag matches package version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          pkg_version="$(node -p "require('./package.json').version")"
+          tag_version="${GITHUB_REF_NAME#v}"
+          if [ "$pkg_version" != "$tag_version" ]; then
+            echo "tag v$tag_version does not match package.json version $pkg_version" >&2
+            exit 1
+          fi
+
+      - name: Verify CHANGELOG has an entry for this version
+        # Pi shows these entries under "Extension Updates", so a missing section
+        # means users get a version bump with no explanation.
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if ! grep -Eq "^## \[?${version//./\\.}\]?( |$)" CHANGELOG.md; then
+            echo "CHANGELOG.md has no '## $version' section" >&2
+            exit 1
+          fi
+
+      - name: Publish
+        run: npm publish --provenance --access public

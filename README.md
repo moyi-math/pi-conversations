@@ -96,6 +96,19 @@ public/     前端（原生 JS，无构建步骤）
 - 按模型的 Token/成本是按消息数估算分摊的；会话级别的 Token/成本是精确的。
 - 不索引 `toolResult` 正文（体积大且很少被搜索），但详情页能看到。
 
+## 发布（维护者）
+
+发版走 npm **Trusted Publishing**（OIDC），仓库与 secrets 里都没有长期令牌：
+
+1. 改 `package.json` 的 `version`，并在 `CHANGELOG.md` 顶部加一节 `## [x.y.z] - 日期`
+2. 提交并推送
+3. 打 tag 推送：`git tag v0.2.0 && git push origin v0.2.0`
+4. GitHub Actions（`.github/workflows/publish.yml`）校验 tag/版本/CHANGELOG 后执行 `npm publish --provenance`
+
+首次需要绑定一次：npm 包页面 → Settings → **Trusted Publisher** 选 GitHub Actions，仓库填 `moyi-math/pi-conversations`，workflow 填 `publish.yml`（environment 留空）。
+
+用户侧更新：`pi update --extensions`，下次启动 pi 会在 **Package Updates Available** 里看到本包。
+
 ## 卸载
 
 ```bash
