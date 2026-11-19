@@ -2,6 +2,25 @@
 
 在浏览器里可视化管理这台机器上**所有** pi 会话：浏览、全文搜索、看对话树、重命名、删除、导出、看统计。
 
+## 安装
+
+```bash
+pi install npm:pi-conversations
+/reload
+```
+
+只想试一次、不写进配置：`pi -e npm:pi-conversations`。
+
+升级：
+
+```bash
+pi update --extensions
+```
+
+不要固定版本号安装（`@0.1.0` 这种会被钉住，不再跟随更新）。更新到新版本后，下次启动 pi 会在 **Extension Updates** 里显示本文件（CHANGELOG.md）的变更摘要。
+
+## 用法
+
 ```
 /conversations           # 启动（后台常驻，自动打开浏览器）
 /conversations stop      # 停止后台服务

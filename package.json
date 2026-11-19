@@ -1,5 +1,5 @@
 {
-  "name": "@moyi-math/pi-conversations",
+  "name": "pi-conversations",
   "version": "0.1.0",
   "description": "Browse, search, rename, delete, and export every pi session from a local web UI.",
   "type": "module",
